@@ -12,28 +12,24 @@
     'use strict';
 
     let rowPag = Object.values(window.rowPag || {})[0];
-    let rgbOn = true; // Variable para activar o desactivar el RGB
+    let rgbOn = true; 
 
-    // Función para generar colores RGB cíclicamente
     function rotateRgbColor() {
         let r = 255, g = 0, b = 0;
-        let step = 5; // Incremento más grande para acelerar el cambio de color
+        let step = 5; 
 
-        // Establecer borde rojo inmediatamente al activar RGB
         if (rgbOn) {
             document.querySelectorAll('#question-display').forEach(el => {
                 el.style.borderColor = 'rgb(255, 0, 0)';
             });
         }
 
-        // Aplicar transición ultrarrápida
         document.querySelectorAll('#question-display').forEach(el => {
-            el.style.transition = 'border-color 0.1s linear'; // Transición de solo 0.1 segundos
+            el.style.transition = 'border-color 0.1s linear'; 
         });
 
         setInterval(() => {
             if (!rgbOn) {
-                // Si rgbOn es falso, cambiar el color de borde a negro
                 document.querySelectorAll('#question-display').forEach(el => {
                     el.style.borderColor = '#000000';
                 });
@@ -57,15 +53,13 @@
     if (rowPag && rowPag.questions) {
         const questions = rowPag.questions;
 
-        // Menú de respuestas con el botón "+"
         window.addEventListener('keydown', function (event) {
             if (event.key === '+') {
                 const existingDiv = document.getElementById('question-display');
                 if (existingDiv) {
-                    // Animación de salida: mover a la izquierda
                     existingDiv.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     existingDiv.style.opacity = '0';
-                    existingDiv.style.transform = 'translateX(100%)'; // Mover a la izquierda
+                    existingDiv.style.transform = 'translateX(100%)';
 
                     setTimeout(() => {
                         existingDiv.remove();
@@ -77,7 +71,7 @@
                 mainContainer.id = 'question-display';
                 mainContainer.style.position = 'fixed';
                 mainContainer.style.top = '10px';
-                mainContainer.style.left = '-300px'; // Inicio fuera de la pantalla (a la izquierda)
+                mainContainer.style.left = '-300px'; 
                 mainContainer.style.width = '300px';
                 mainContainer.style.height = '90vh';
                 mainContainer.style.backgroundColor = '#1a1a1a';
@@ -89,8 +83,8 @@
                 mainContainer.style.border = '2px solid rgb(255, 0, 0)';
                 mainContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
 
-                mainContainer.style.scrollbarWidth = 'thin'; // Para Firefox
-                mainContainer.style.scrollbarColor = '#ff6f61 #333'; // Para Firefox
+                mainContainer.style.scrollbarWidth = 'thin';
+                mainContainer.style.scrollbarColor = '#ff6f61 #333'; 
 
                 mainContainer.style.opacity = '0';
                 mainContainer.style.transform = 'translateX(-100%)';
@@ -161,16 +155,14 @@
 
                 document.body.appendChild(mainContainer);
 
-                // Forzar animación de entrada: mover a la derecha
                 requestAnimationFrame(() => {
                     mainContainer.style.opacity = '1';
-                    mainContainer.style.transform = 'translateX(310px)'; // Deslizar hacia adentro
+                    mainContainer.style.transform = 'translateX(310px)'; 
                 });
 
-                if (rgbOn) rotateRgbColor(); // Activar RGB si rgbOn es true
+                if (rgbOn) rotateRgbColor(); 
             }
 
-            // Menú de configuraciones con la tecla "|"
             if (event.key === '|') {
                 const settingsMenu = document.getElementById('settings-menu');
                 if (settingsMenu) {
@@ -180,7 +172,6 @@
             }
         });
 
-        // Crear el menú de configuraciones con Flexbox
         const newSettingsMenu = document.createElement('div');
         newSettingsMenu.id = 'settings-menu';
         newSettingsMenu.style.position = 'fixed';
@@ -194,7 +185,6 @@
         newSettingsMenu.style.display = 'none'; // Ocultar por defecto
         newSettingsMenu.style.zIndex = '10000';
 
-        // Título del menú
         const title = document.createElement('div');
         title.textContent = 'Menú de configuraciones';
         title.style.fontSize = '20px';
@@ -202,7 +192,6 @@
         title.style.textAlign = 'center';
         newSettingsMenu.appendChild(title);
 
-        // Agregar "Luces RGB" con Flexbox
         const rgbLabel = document.createElement('div');
         rgbLabel.textContent = 'Luces RGB';
         rgbLabel.style.marginBottom = '10px';
@@ -213,7 +202,6 @@
         rgbButtonContainer.style.justifyContent = 'space-between';
         rgbButtonContainer.style.alignItems = 'center';
 
-        // Crear el botón de interruptor estilo iPhone
         const rgbButton = document.createElement('div');
         rgbButton.style.position = 'relative';
         rgbButton.style.width = '50px';
@@ -223,11 +211,10 @@
         rgbButton.style.cursor = 'pointer';
         rgbButton.style.transition = 'background-color 0.3s ease';
 
-        // El círculo dentro del botón
         const circle = document.createElement('div');
         circle.style.position = 'absolute';
         circle.style.top = '2px';
-        circle.style.left = rgbOn ? 'calc(100% - 23px)' : '2px'; // Movimiento del círculo
+        circle.style.left = rgbOn ? 'calc(100% - 23px)' : '2px'; 
         circle.style.width = '20px';
         circle.style.height = '20px';
         circle.style.borderRadius = '50%';
@@ -238,15 +225,14 @@
         rgbButton.onclick = function () {
             rgbOn = !rgbOn;
             rgbButton.style.backgroundColor = rgbOn ? 'green' : 'grey';
-            circle.style.left = rgbOn ? 'calc(100% - 23px)' : '2px'; // Mover el círculo
-            rotateRgbColor(); // Activar o desactivar el color RGB
+            circle.style.left = rgbOn ? 'calc(100% - 23px)' : '2px';
+            rotateRgbColor();
         };
 
         rgbButtonContainer.appendChild(rgbLabel);
         rgbButtonContainer.appendChild(rgbButton);
         newSettingsMenu.appendChild(rgbButtonContainer);
 
-        // Mostrar el menú de configuraciones
         document.body.appendChild(newSettingsMenu);
 
     }
