@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.9
 // @description  Ver las respuestas con el botón '+' y abrir el menú de configuración con la tecla '|'
-// @author       Uriel Szafir
+// @author       Duszafir
 // @match        https://campus.ort.edu.ar/*/formulario/*
 // @grant        none
 // ==/UserScript==
@@ -46,7 +46,7 @@
             document.querySelectorAll('#question-display').forEach(el => {
                 el.style.borderColor = `rgb(${r}, ${g}, ${b})`;
             });
-        }, 10); // Intervalo muy rápido de 10ms
+        }, 10);
     }
 
 
@@ -166,7 +166,6 @@
             if (event.key === '|') {
                 const settingsMenu = document.getElementById('settings-menu');
                 if (settingsMenu) {
-                    // Toggle de visibilidad del menú de configuración
                     settingsMenu.style.display = settingsMenu.style.display === 'none' ? 'block' : 'none';
                 }
             }
