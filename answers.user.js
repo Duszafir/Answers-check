@@ -92,6 +92,25 @@
                 mainContainer.style.transform = 'translateX(-100%)';
                 mainContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
 
+                const fillButton = document.createElement('button');
+                fillButton.textContent = 'Rellenar respuestas';
+                fillButton.style.display = 'block';
+                fillButton.style.marginBottom = '15px';
+                fillButton.style.padding = '10px';
+                fillButton.style.width = '100%';
+                fillButton.style.backgroundColor = '#ff6f61';
+                fillButton.style.color = 'white';
+                fillButton.style.border = 'none';
+                fillButton.style.borderRadius = '5px';
+                fillButton.style.cursor = 'pointer';
+                fillButton.style.fontWeight = 'bold';
+                
+                fillButton.addEventListener('click', () => {
+                    alert('Función de rellenar respuestas aún no implementada');
+                });
+                
+                mainContainer.appendChild(fillButton);
+
                 const style = document.createElement('style');
                 style.textContent = `
                     #mainContainer::-webkit-scrollbar {
