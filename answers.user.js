@@ -3,8 +3,9 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.9
 // @description  Ver las respuestas con el botón '+' y abrir el menú de configuración con la tecla '|'
-// @author       Duszafir
-// @match        https://campus.ort.edu.ar/*/formulario/*
+// @author       Uriel Szafir
+// @include      *://campus.ort.edu.ar/*/formulario/*
+// @include      *://campus.ort.edu.ar/formulario/*
 // @grant        none
 // ==/UserScript==
 
@@ -12,11 +13,11 @@
     'use strict';
 
     let rowPag = Object.values(window.rowPag || {})[0];
-    let rgbOn = true; 
+    let rgbOn = true;
 
     function rotateRgbColor() {
         let r = 255, g = 0, b = 0;
-        let step = 5; 
+        let step = 5;
 
         if (rgbOn) {
             document.querySelectorAll('#question-display').forEach(el => {
@@ -25,7 +26,7 @@
         }
 
         document.querySelectorAll('#question-display').forEach(el => {
-            el.style.transition = 'border-color 0.1s linear'; 
+            el.style.transition = 'border-color 0.1s linear';
         });
 
         setInterval(() => {
@@ -36,12 +37,12 @@
                 return;
             }
 
-            if (r === 255 && g < 255 && b === 0) g += step;         // Rojo a amarillo
-            else if (g === 255 && r > 0 && b === 0) r -= step;     // Amarillo a verde
-            else if (g === 255 && b < 255 && r === 0) b += step;   // Verde a cian
-            else if (b === 255 && g > 0 && r === 0) g -= step;     // Cian a azul
-            else if (b === 255 && r < 255 && g === 0) r += step;   // Azul a magenta
-            else if (r === 255 && b > 0 && g === 0) b -= step;     // Magenta a rojo
+            if (r === 255 && g < 255 && b === 0) g += step;
+            else if (g === 255 && r > 0 && b === 0) r -= step;
+            else if (g === 255 && b < 255 && r === 0) b += step;
+            else if (b === 255 && g > 0 && r === 0) g -= step;
+            else if (b === 255 && r < 255 && g === 0) r += step;
+            else if (r === 255 && b > 0 && g === 0) b -= step;
 
             document.querySelectorAll('#question-display').forEach(el => {
                 el.style.borderColor = `rgb(${r}, ${g}, ${b})`;
@@ -53,6 +54,7 @@
     if (rowPag && rowPag.questions) {
         const questions = rowPag.questions;
 
+        // Menú de respuestas con el botón "+"
         window.addEventListener('keydown', function (event) {
             if (event.key === '+') {
                 const existingDiv = document.getElementById('question-display');
@@ -71,7 +73,7 @@
                 mainContainer.id = 'question-display';
                 mainContainer.style.position = 'fixed';
                 mainContainer.style.top = '10px';
-                mainContainer.style.left = '-300px'; 
+                mainContainer.style.left = '-300px';
                 mainContainer.style.width = '300px';
                 mainContainer.style.height = '90vh';
                 mainContainer.style.backgroundColor = '#1a1a1a';
@@ -84,7 +86,7 @@
                 mainContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
 
                 mainContainer.style.scrollbarWidth = 'thin';
-                mainContainer.style.scrollbarColor = '#ff6f61 #333'; 
+                mainContainer.style.scrollbarColor = '#ff6f61 #333';
 
                 mainContainer.style.opacity = '0';
                 mainContainer.style.transform = 'translateX(-100%)';
@@ -157,10 +159,10 @@
 
                 requestAnimationFrame(() => {
                     mainContainer.style.opacity = '1';
-                    mainContainer.style.transform = 'translateX(310px)'; 
+                    mainContainer.style.transform = 'translateX(310px)';
                 });
 
-                if (rgbOn) rotateRgbColor(); 
+                if (rgbOn) rotateRgbColor();
             }
 
             if (event.key === '|') {
@@ -181,7 +183,7 @@
         newSettingsMenu.style.padding = '20px';
         newSettingsMenu.style.borderRadius = '10px';
         newSettingsMenu.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.3)';
-        newSettingsMenu.style.display = 'none'; // Ocultar por defecto
+        newSettingsMenu.style.display = 'none';
         newSettingsMenu.style.zIndex = '10000';
 
         const title = document.createElement('div');
@@ -213,7 +215,7 @@
         const circle = document.createElement('div');
         circle.style.position = 'absolute';
         circle.style.top = '2px';
-        circle.style.left = rgbOn ? 'calc(100% - 23px)' : '2px'; 
+        circle.style.left = rgbOn ? 'calc(100% - 23px)' : '2px';
         circle.style.width = '20px';
         circle.style.height = '20px';
         circle.style.borderRadius = '50%';
